@@ -22,25 +22,25 @@ This document contains the following details:
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly available, in addition to restricting access to the network.
+Load balancing ensures that the application will be highly available, in addition to restricting inbound access to the network.
 - What aspect of security do load balancers protect?
-- Answer: They protect the availability of the CIA
+- Answer: They protect the availability aspect of security from the CIA framework
 
 <br>
 
 - What is the advantage of a jump box?
-- Answer: Provides a single point of administration rather than many individual points. This makes it easy to log activities for security purposes and audits
+- Answer: Provides a single point of administration rather than many individual points. This also makes it easy to log activities for security purposes and audits
 
 <br>
 
-Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the OS and system files.
+Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the VM's file systems and system metrics.
 - What does Filebeat watch for?
 - Answer: Filebeat watches for any changes to the system files
 
 <br>
 
 - What does Metricbeat record?
-- Answer: Metric records changes to the operating system as well as services
+- Answer: Metric records the system metrics of the VM's like CPU usage or ssh logins
 
 <br>
 
@@ -49,9 +49,9 @@ The configuration details of each machine may be found below.
 | Name     | Function | IP Address | Operating System |
 |----------|----------|------------|------------------|
 | Jump Box | Gateway  | 10.0.0.4   | Linux |
-| Web-1 | DVWA Server 1 | 10.0.0.5  | Linux |
-| Web-2 | DVWA Server 1 | 10.0.0.6 | Linux |
-| ELK-Server | Log Collector Server | 10.1.0.5 | Linux |
+| Web-1 | Web Server 1 | 10.0.0.5  | Linux |
+| Web-2 | Web Server 2 | 10.0.0.6 | Linux |
+| ELK-Server | Monitoring Server | 10.1.0.5 | Linux |
 
 <br>
 
@@ -71,8 +71,7 @@ A summary of the access policies in place can be found in the table below.
 | Name     | Publicly Accessible | Allowed IP Addresses |
 |----------|---------------------|----------------------|
 | Jump Box | Yes | 76.93.187.62 |
-| ELK-Server | Yes | 76.93.187.62 |
-| Load Balancer | Yes | 76.93.187.62 |
+| ELK-Server | No | 10.0.0.4 |
 | Web-1 | No | 10.0.0.4 |
 | Web-2 | No | 10.0.0.4 |
 
@@ -107,11 +106,11 @@ We have installed the following Beats on these machines:
 - Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- Filebeat collects system logs to tack any changes made to system files. An example how one looks can be seen here:
+- Filebeat collects system logs to tack any changes made to system files. We can receive Apache logs this way. An example of a filebeat log how one looks can be seen here:
 ![Filebeat example](Images/filebeat.png)
 
 
-- Metricbeat collects logs about changes to the operating system and about services. An example can be seen here:
+- Metricbeat collects logs about system metric like ssh logins or cpu usage. We can even get logs about failed sudo attempts. An example of a metricbeat log can be seen here:
 ![Metricbeat example](Images/metricbeat.png)
 
 <br>
@@ -120,6 +119,6 @@ These Beats allow us to collect the following information from each machine:
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned:
 
 SSH into the control node and follow the steps below:
-- Copy the ELK-playbook.yml file to /etc/ansible/
-- Update the ELK-playbook.yml file to include the machines you want to run the playbook on. You do this by editing the host field in the .yml file to say either webservers or elk. These 2 are groups that were defined in the file /etc/ansible/hosts
-- Run the playbook, and navigate to http://20.114.171.107:5601/app/kibana to check that the installation worked as expected.
+- Copy the all playbooks file to the ansible control node
+- Update the /etc/ansible/hosts file to include the machines you want to run the playbook on. Then once you specified the machines with group labels in the host file you can edit the playbook where you can find the host field. There you can specify the machine groups you want the play book ran on.
+- Run the playbook, and navigate to http://10.1.0.5:5601/app/kibana to check that the installation worked as expected.
