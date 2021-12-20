@@ -45,7 +45,6 @@ Integrating an ELK server allows users to easily monitor the vulnerable VMs for 
 <br>
 
 The configuration details of each machine may be found below.
-_Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 
 | Name     | Function | IP Address | Operating System |
 |----------|----------|------------|------------------|
@@ -121,6 +120,6 @@ These Beats allow us to collect the following information from each machine:
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned:
 
 SSH into the control node and follow the steps below:
-- Copy the ELK-playbook.yml file to /etc/ansible/.
+- Copy the ELK-playbook.yml file to /etc/ansible/
 - Update the ELK-playbook.yml file to include the machines you want to run the playbook on. You do this by editing the host field in the .yml file to say either webservers or elk. These 2 are groups that were defined in the file /etc/ansible/hosts
 - Run the playbook, and navigate to http://20.114.171.107:5601/app/kibana to check that the installation worked as expected.
